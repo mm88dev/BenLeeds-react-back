@@ -1,0 +1,11 @@
+POST http://localhost:3000/admin/newUser/
+content-type: application/json
+
+{
+    "firstName" : "kawhi",
+    "lastName" : "leonard",
+    "password": "11",
+    "emailPassword": "whatevs",
+    "email": "kawhi@gmail.com",
+    "region": "Malibu"
+}

@@ -1,0 +1,19 @@
+POST http://localhost:3000/admin/editVendor/5cebd1eb1c9d440000fe87b2
+content-type: application/json
+
+{
+    "firstName" : "Kawhi",
+    "lastName" : "Leonard",
+    "email": "smth@gmail.com",
+    "profession": "floors",
+    "calendar": [
+      {
+        "date": "12321312321",
+        "busy": false
+      },
+      {
+        "date": "23423432432",
+        "busy": false
+      }
+    ]
+}

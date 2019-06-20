@@ -1,0 +1,9 @@
+POST http://localhost:3000/admin/newVendor/
+content-type: application/json
+
+{
+    "firstName" : "newVendor",
+    "lastName" : "newVendor",
+    "email": "smth@gmail.com",
+    "profession": "floors"
+}

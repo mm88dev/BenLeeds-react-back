@@ -1,0 +1,42 @@
+POST http://localhost:3000/admin/assignJob/5cebd0661c9d440000fe87b1
+content-type: application/json
+
+{
+    "job" : {
+        "id": "5cebd0661c9d440000fe87b1",
+        "status": "sent",
+        "name": "Electric bulb Repair",
+        "subCategory": "Electric",
+        "room": "Living Room",
+        "price": 23,
+        "quantity": 2,
+        "comment": "comment about electrc bulb",
+        "workorderId": "5cf641d125eeb12eb4a82b5e",
+        "vendorId": "5cebd1eb1c9d440000fe87b2",
+        "assignmentDate": ""
+    },
+    "vendor": {
+        "id": "5cebd1eb1c9d440000fe87b2",
+        "firstName": "Kawhi",
+        "lastName": "Leonard",
+        "email": "mladenjaramaz93@gmail.com",
+        "profession": "floors",
+        "calendar": [
+            {
+                "date": "12-21-2019",
+                "busy": true
+            },
+            {
+                "date": "12-22-2019",
+                "busy": false
+            }
+        ],
+        "jobAssignment": "12-21-2019"
+    },
+    "workorder": {
+        "id": "5cf641d125eeb12eb4a82b5e",
+        "status": "sent",
+        "buildingNumber": "123",
+        "apartmentNumber": "333"
+    }
+}
