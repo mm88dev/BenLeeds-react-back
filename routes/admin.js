@@ -271,6 +271,7 @@ exports.editVendor = function(req, res) {
         email: req.body.email,
         profession: req.body.profession
     };
+    console.log(req.params);
     let Vendor = require("../db/models/vendor");
     Vendor.editVendor(editedVendor, res, callback);
 };
