@@ -14,19 +14,19 @@ const workorderSchema = mongoose.Schema({
     },
     loginTime: {
         type: Date, 
-        // required: true
+        required: true
     },
     completedTime: {
         type: Date, 
-        // required: true
+        required: true
     }, 
     sendTime: {
         type: Date, 
-        // required: true
+        required: true
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        // required: true
+        required: true
     },
     status: {
         type: String,
@@ -43,11 +43,11 @@ module.exports.getAllWorkorders = function(callback) {
     Workorder.find({})
     .then(workorders => {
         let data;
-        if (workorders !== null && workorders.length !== 0) {
+        if (workorders !== null) {
             data = workorders;
         } else {
             data = {
-                error: "No workorders avalailable"
+                error: "Could not get workorders"
             };
         }
         callback(data);
@@ -84,7 +84,7 @@ module.exports.getUserWorkorders = function(user, res, callback) {
     .then(workorders => {
 
         let data;
-        if (workorders !== null && workorders.length !== 0) {
+        if (workorders !== null) {
             data = {
                 user: user,
                 workorders: workorders
@@ -92,7 +92,7 @@ module.exports.getUserWorkorders = function(user, res, callback) {
         } else {
             data = {
                 user: user,
-                error: "There are no workorders associated with that user"
+                error: "Could not get workorders associated with that user"
             };
         }
         data = JSON.stringify(data);

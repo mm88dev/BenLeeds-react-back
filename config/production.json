@@ -5,5 +5,5 @@
     "ADMIN_PASSWORD": "1234",
     "ADMIN_EMAIL_PASSWORD": "P0slednjiKr0jac",
     "ADMIN_EMAIL_HOST": "mail.skydream.info",
-    "NODE_ENV": "development"    
+    "NODE_ENV": "production"    
 }

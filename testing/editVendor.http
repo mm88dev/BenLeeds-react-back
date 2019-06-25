@@ -1,9 +1,8 @@
-POST http://localhost:3000/admin/editVendor/5cebd1eb1c9d440000fe87b2
+POST http://localhost:3500/admin/editVendor/5d0fcfca28963f28d0a7928a
 content-type: application/json
 
 {
-    "firstName" : "Kawhi",
-    "lastName" : "Leonard",
+    "name" : "Kawhi",
     "email": "smth@gmail.com",
     "profession": "floors",
     "calendar": [
@@ -15,5 +14,6 @@ content-type: application/json
         "date": "23423432432",
         "busy": false
       }
-    ]
+    ],
+    "phone": "310-231-23234344"
 }

@@ -41,11 +41,11 @@ module.exports.getAllRooms = function(res, callback) {
     .then(rooms => {
         
         let data;
-        if (rooms !== null && rooms.length !== 0) {
+        if (rooms !== null) {
             data = rooms; 
         } else {
             data = {
-                error: "Not a single room instance exists at this moment"
+                error: "Could not get rooms"
             };
         }
         data = JSON.stringify(data);

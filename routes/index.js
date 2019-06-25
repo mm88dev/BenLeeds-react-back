@@ -22,11 +22,12 @@ exports.getOperationalData = function(req, res) {
 // login admin/user function
 exports.login = function(req, res) {
 
+  const config = require("config");
   let email = req.body.email;
   let password = req.body.password;
-  if (email === process.env.ADMIN_EMAIL) {
+  if (email === config.get("ADMIN_EMAIL")) {
     // admin login attempt
-    if (password === process.env.ADMIN_PASSWORD) {
+    if (password === config.get("ADMIN_PASSWORD")) {
       // admin login attempt success
       res.send("admin");
     } else {

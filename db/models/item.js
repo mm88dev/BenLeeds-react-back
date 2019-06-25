@@ -19,6 +19,9 @@ const ItemSchema = mongoose.Schema({
     price: {
         type: Number,
         required: true
+    },
+    link: {
+        type: String
     }  
 });
 // export Item constructor
@@ -31,7 +34,7 @@ module.exports.getAllItems = function(callback) {
     Item.find({})
     .then(items => {
         let data;
-        if (items !== null && items.length !== 0) {
+        if (items !== null) {
             data = {
                 items: items
             };
@@ -73,7 +76,7 @@ module.exports.getRoomItems = function(roomData, res, callback) {
     })
     .then(items => {
         let data;
-        if (items !== null && items.length !== 0) {
+        if (items !== null) {
             data = {
                 items: items,
                 room: roomData

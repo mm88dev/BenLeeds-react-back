@@ -1,6 +1,6 @@
 "use strict";
-// enviorement setup
-require("dotenv").config();
+// enviorenment variables
+const config = require("config");
 // express-generator defaults
 const http = require('http');
 const createError = require('http-errors');
@@ -17,7 +17,6 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 
 // headers CORS set-up
@@ -75,6 +74,7 @@ app.post("/admin/editUser/:id", require("./routes/admin").editUser);
 app.post("/admin/editItem/:id", require("./routes/admin").editItem);
 // admin assigns job, editing job, vendor and optionally also workorder
 app.post("/admin/assignJob/:id", require("./routes/admin").assignJob);
+app.post("/admin/finishJob/:id", require("./routes/admin").finishJob);
 // admin deletes one insance of data
 app.post("/admin/vendors/:id", require("./routes/admin").deleteVendor);
 app.post("/admin/users/:id", require("./routes/admin").deleteUser);
@@ -82,15 +82,15 @@ app.post("/admin/items/:id", require("./routes/admin").deleteItem);
 
 
 // serve react in production
-if (process.env.NODE_ENV === 'production') {
-
+if (config.get("NODE_ENV") === 'production') {
+  
   app.use(express.static("client/build"));
-  // route that's not the rpute defined above
+  // route that's not among the route defined above
   app.get("*", function(req, res) {
 
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
-}
+} 
 
 
 // catch 404 and forward to error handler

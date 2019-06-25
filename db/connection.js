@@ -1,7 +1,8 @@
 "use strict";
 // establishing a connection to mongoAtlas
 const mongoose = require("mongoose");
-mongoose.connect(process.env.DB_URI, {
+const dbURI = require("config").get("DB_URI");
+mongoose.connect(dbURI, {
     useNewUrlParser: true,
     useFindAndModify: false,
     dbName: "benLeeds"

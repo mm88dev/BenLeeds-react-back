@@ -72,11 +72,11 @@ module.exports.getAllUsers = function(res, callback) {
     User.find({})
     .then(users => {
         let data;
-        if (users !== null && users.length !== 0) {
+        if (users !== null) {
             data = users;
         } else {
             data = {
-                error: "Not one registered user exists at this moment"
+                error: "Could not get users"
             };
         }
         data = JSON.stringify(data);

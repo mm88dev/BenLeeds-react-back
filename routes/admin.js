@@ -126,95 +126,95 @@ exports.singleItem = function(req, res) {
 // create new vendor/user/item
 exports.createVendor = function(req, res) {
     
-    // let now = new Date();
-    // let year = now.getFullYear();
-    // let month = now.getMonth() + 1;
-    // let day = now.getDate();
-    // let calendarEnd = day + 100;
-    // // return number of days in a month
-    // function daysInMonth(month, year) {
+    let now = new Date();
+    let year = now.getFullYear();
+    let month = now.getMonth() + 1;
+    let day = now.getDate();
+    let calendarEnd = day + 100;
+    // return number of days in a month
+    function daysInMonth(month, year) {
 
-    //     switch(month) {
+        switch(month) {
 
-    //         case 1:
-    //             return 31;
-    //             break;
-    //         case 2:
-    //             if ((year % 4) === 0) {
-    //                 return 29;
-    //             } else {
-    //                 return 28;
-    //             }
-    //             break;
-    //         case 3:
-    //             return 31;
-    //             break;
-    //         case 4:
-    //             return 30;
-    //             break;
-    //         case 5:
-    //             return 31;
-    //             break;
-    //         case 6:
-    //             return 30;
-    //             break;   
-    //         case 7:
-    //             return 31;
-    //             break;
-    //         case 8:
-    //             return 31;
-    //             break;
-    //         case 9:
-    //             return 30;
-    //             break;
-    //         case 10:
-    //             return 31;
-    //             break;
-    //         case 11:
-    //             return 30;
-    //             break;
-    //         case 12:
-    //             return 31;
-    //             break;                                                                                                                                                                  
-    //         default:
-    //             break;
-    //     }
-    // };
-    // // format date
-    // function formatDate(day, month, year) {
+            case 1:
+                return 31;
+                break;
+            case 2:
+                if ((year % 4) === 0) {
+                    return 29;
+                } else {
+                    return 28;
+                }
+                break;
+            case 3:
+                return 31;
+                break;
+            case 4:
+                return 30;
+                break;
+            case 5:
+                return 31;
+                break;
+            case 6:
+                return 30;
+                break;   
+            case 7:
+                return 31;
+                break;
+            case 8:
+                return 31;
+                break;
+            case 9:
+                return 30;
+                break;
+            case 10:
+                return 31;
+                break;
+            case 11:
+                return 30;
+                break;
+            case 12:
+                return 31;
+                break;                                                                                                                                                                  
+            default:
+                break;
+        }
+    };
+    // format date
+    function formatDate(day, month, year) {
 
-    //     let mm = month < 10 ? "0" + month : "" + month;
-    //     let dd = day < 10 ? "0" + day : "" + day;
-    //     let yyyy = "" + year;
-    //     return mm + "-" + dd + "-" + yyyy; 
-    // } 
-    // let calendar = [];
-    // for (let i = day; i < calendarEnd; i++) {
-    //     let dateTime = formatDate(day, month, year);
-    //     calendar.push({
-    //         date: dateTime,
-    //         busy: false
-    //     });
-    //     // increase day
-    //     day++;
-    //     // optionally increase month
-    //     if (day > daysInMonth(month, year)) {
-    //         month++;
-    //         day = 1;
-    //         // optionally increase year
-    //         if (month > 12) {
-    //             year++;
-    //             month = 1;
-    //         }
-    //     }
-    // } 
+        let mm = month < 10 ? "0" + month : "" + month;
+        let dd = day < 10 ? "0" + day : "" + day;
+        let yyyy = "" + year;
+        return mm + "-" + dd + "-" + yyyy; 
+    } 
+    let calendar = [];
+    for (let i = day; i < calendarEnd; i++) {
+        let dateTime = formatDate(day, month, year);
+        calendar.push({
+            date: dateTime,
+            busy: false
+        });
+        // increase day
+        day++;
+        // optionally increase month
+        if (day > daysInMonth(month, year)) {
+            month++;
+            day = 1;
+            // optionally increase year
+            if (month > 12) {
+                year++;
+                month = 1;
+            }
+        }
+    } 
     // get new vendor data
     let createdVendor = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         profession: req.body.profession,
-        // calendar: calendar
+        calendar: calendar
     };
     let Vendor = require("../db/models/vendor");
     Vendor.createVendor(createdVendor, res, callback);
@@ -265,13 +265,13 @@ exports.editWorkorder = function(req, res) {
 exports.editVendor = function(req, res) {
 
     let editedVendor = {
-        id : req.params.id,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
+        id: req.params.id,
+        name: req.body.name,
+        phone: req.body.phone,
         email: req.body.email,
-        profession: req.body.profession
+        profession: req.body.profession,
+        calendar: req.body.calendar
     };
-    console.log(req.params);
     let Vendor = require("../db/models/vendor");
     Vendor.editVendor(editedVendor, res, callback);
 };
@@ -313,12 +313,12 @@ exports.assignJob = function(req, res) {
         workorder: frontData.workorder
     };
     let Job = require("../db/models/job");
-    Job.editJob(jobData, editVendor);
+    Job.assignJob(jobData, assignVendor);
     // edit vendor data
-    function editVendor(data) {
+    function assignVendor(data) {
         if (data.error === undefined) {
             let Vendor = require("../db/models/vendor");
-            Vendor.editVendor(data, editWorkorder);
+            Vendor.assignVendor(data, editWorkorder);
         } else {
             data = JSON.stringify(data);
             callback(res, data);
@@ -344,7 +344,17 @@ exports.assignJob = function(req, res) {
             callback(res, data);
         }
     }
-};  
+};
+// set job status to finished
+exports.finishJob = function(req, res) {
+
+    const jobData = {
+        id: req.params.id,
+        status: req.body.status
+    };
+    const Job = require("../db/models/job");
+    Job.finishJob(jobData, res, callback);
+};
 // delete existing vendor/user/item
 exports.deleteVendor = function(req, res) {
 

@@ -1,7 +1,7 @@
 "use strict";
 
 const nodemailer = require("nodemailer"); 
-
+const config = require("config");
 
 exports.userSendMail = function(data) {
     // sender email config
@@ -31,7 +31,7 @@ exports.userSendMail = function(data) {
     // to: process.env.ADMIN_EMAIL,
     const mailOptions = {
         from: email,
-        to: process.env.ADMIN_EMAIL,
+        to: config.get("ADMIN_EMAIL"),
         subject: subject,
         html: content
     };
@@ -52,9 +52,9 @@ exports.userSendMail = function(data) {
 exports.adminSendMail = function(data) {
 
     // sender email config
-    const email = process.env.ADMIN_EMAIL;
-    const emailPassword = process.env.ADMIN_EMAIL_PASSWORD;
-    const emailHost = process.env.ADMIN_EMAIL_HOST;
+    const email = config.get("ADMIN_EMAIL");
+    const emailPassword = config.get("ADMIN_EMAIL_PASSWORD");
+    const emailHost = config.get("ADMIN_EMAIL_HOST");
     const transporter = nodemailer.createTransport({
         host: emailHost,
         port: 465,

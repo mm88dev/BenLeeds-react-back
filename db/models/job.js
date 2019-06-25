@@ -42,7 +42,6 @@ const JobSchema = mongoose.Schema({
     },
     assignmentDate: {
         type: String,
-        // required: true,
         default: ""
     }    
 });
@@ -56,10 +55,12 @@ module.exports.getAllJobs = function(res, callback) {
     Job.find({})
     .then(jobs => {
         let data;
-        if (jobs !== null && jobs.length !== 0) {
+        if (jobs !== null) {
             data = jobs;
         } else {
-            data = "No workorders avalailable";
+            data = {
+                error: "No workorders avalailable"
+            };
         }
         data = JSON.stringify(data);
         callback(res, data);
@@ -77,7 +78,9 @@ module.exports.getSingleJob = function(id, res, callback) {
         if (job !== null) {
             data = job;
         } else {
-            data = "No job for that id";
+            data = {
+                error: "No job for that id"
+            };
         }
         data = JSON.stringify(data);
         callback(res, data);
@@ -94,8 +97,7 @@ module.exports.getWorkorderJobs = function(workorder, res, callback) {
     })
     .then(jobs => {
         let data;
-        if (jobs !== null && jobs.length > 0) {
-
+        if (jobs !== null) {
             data = {
                 workorder: workorder,
                 jobs: jobs
@@ -128,7 +130,7 @@ module.exports.createJobs = function(workorderData, res, callback) {
     .then(jobs => {
 
         let data;
-        if (jobs !== null && jobs.length !== 0) {
+        if (jobs !== null) {
             data = {
                 success: "ok"
             };
@@ -150,8 +152,8 @@ module.exports.createJobs = function(workorderData, res, callback) {
     });
 };
 
-// admin edits existing job
-module.exports.editJob = function(jobData, callback) {
+// admin assigns job to a vendor
+module.exports.assignJob = function(jobData, callback) {
 
     Job.findByIdAndUpdate(jobData.job.id, {
         $set : {
@@ -179,3 +181,32 @@ module.exports.editJob = function(jobData, callback) {
         console.log("An error occured while updating a job " + err);
     });
 };  
+// admin declares job finished
+module.exports.finishJob = function(jobData, res, callback) {
+
+    Job.findByIdAndUpdate(jobData.id, {
+        $set: {
+            status: jobData.status
+        }
+    }, {
+        new: true
+    })
+    .then(job => {
+        let data;
+        if (job !== null) {
+            data = {
+                success: "Ok"
+            }; 
+        } else {
+            data = {
+                error: "An error occurred while declaring a job finished"
+            };
+        }
+        data = JSON.stringify(data);
+        callback(res, data);
+    })
+    .catch(err => {
+
+        console.log("An error occured while declaring a job finished " + err);
+    }); 
+};
